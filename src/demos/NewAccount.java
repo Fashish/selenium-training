@@ -39,6 +39,7 @@ public class NewAccount {
 		WebElement weeklyCheckbox = driver.findElement(By.name("ctl00$MainContent$checkWeeklyEmail"));
 		WebElement monthlyCheckbox = driver.findElement(By.name("ctl00$MainContent$checkMonthlyEmail"));
 		WebElement occasionalCheckbox = driver.findElement(By.name("ctl00$MainContent$checkUpdates"));
+		WebElement submitButton = driver.findElement(By.id("MainContent_btnSubmit"));
 		
 		
 		// Fill out the form
@@ -92,11 +93,18 @@ public class NewAccount {
 			}
 		}
 		
-		driver.findElement(By.id("MainContent_btnSubmit")).click();
+		submitButton.click();
 					
-		// 4. Get confirmation & close browser
+		// Get confirmation & close browser
 		String conf = driver.findElement(By.id("MainContent_lblTransactionResult")).getText();
-		System.out.println("CONFIRMATION: " + conf);
+		String expected = "Customer information added successfully";
+		if (conf.contains(expected)) {
+			System.out.println("CONFIRMATION: " + conf);
+		}
+		else {
+			System.out.println("TEST FAILED");
+		}
+		
 		driver.close();
 	}
 
